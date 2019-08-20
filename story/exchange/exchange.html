@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Exchange Points for Currency</title>
+  </head>
+  <body>
+    <h1>Exchange Points for Currency</h1>
+    <hr>
+    <p>Choose your currency:</p>
+    <select id="currency" onchange="calcExchange()">
+        <option selected disabled>Select a Currency...</option>
+        <option value="USD">US Dollars ($)</option>
+        <option value="EUR">Euros (€)</option>
+        <option value="GBP">British Pounds (£)</option>
+        <option value="CAD">Canadian Dollar (C$)</option>
+    </select>
+    <p id="rate">The exchange rate is: </p>
+    <hr>
+    <p id="balance">Your points: </p>
+    <p>Please enter the amount of points that you would like to exchange: </p>
+    <input type="number" id="pointsToTrade" min="500" max="10000">
+    <button onclick="tradePoints()">Exchange Points for Money</button>
+    <p id="traded"></p>
+  </body>
+</html>
+
+<script>
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "http://www.apilayer.net/api/live?access_key=ef786c0e58b1e4fb8b2ebe8034ade1cd&currencies=EUR,GBP,CAD", false);
+    xmlHttp.send();
+    var response = JSON.parse(xmlHttp.responseText);
+    var rates = response.quotes;
+    var rate = '';
+    var points = Math.floor(Math.random() * (10000 - 500 + 1)) + 500;
+    var balanceText = document.getElementById('balance');
+    balanceText.textContent = "Your points: " + points;
+
+    function tradePoints() {
+        var pointsToTrade = document.getElementById("pointsToTrade").value;
+        if(pointsToTrade > points) {
+            alert("You do not have enough points!");
+        } else {
+            var earnedMoney = (pointsToTrade / 100 * rate).toFixed(2);
+            var selectedCurrency = document.getElementById("currency").value;
+            var tradedMoney = document.getElementById("traded");
+            if(selectedCurrency == "USD") {
+                tradedMoney.textContent = "You traded " + pointsToTrade + " points for $" + earnedMoney;
+                points -= pointsToTrade;
+                balance.textContent = "Your points: " + points;
+            } else if (selectedCurrency == "EUR") {
+                tradedMoney.textContent = "You traded " + pointsToTrade + " points for " + earnedMoney + "€";
+                points -= pointsToTrade;
+                balance.textContent = "Your points: " + points;
+            } else if (selectedCurrency == "GBP") {
+                tradedMoney.textContent = "You traded " + pointsToTrade + " points for £" + earnedMoney;
+                points -= pointsToTrade;
+                balance.textContent = "Your points: " + points;
+            } else {
+                tradedMoney.textContent = "You traded " + pointsToTrade + " points for $" + earnedMoney + " CAD";
+                points -= pointsToTrade;
+                balance.textContent = "Your points: " + points;
+            }
+        }
+    }
+
+    function calcExchange() {
+        var selectedCurrency = document.getElementById("currency").value;
+        var rateText = document.getElementById("rate");
+        if(selectedCurrency == "USD") {
+            rate = 1.00;
+            rateText.textContent = "The exchange rate is: 100 points for $1.00";
+        } else if (selectedCurrency == "EUR") {
+            rate = rates.USDEUR.toFixed(2);
+            rateText.textContent = "The exchange rate is: 100 points for " + rate + "€";
+        } else if (selectedCurrency == "GBP") {
+            rate = rates.USDGBP.toFixed(2);
+            rateText.textContent = "The exchange rate is: 100 points for £" + rate;
+        } else {
+            rate = rates.USDCAD.toFixed(2);
+            rateText.textContent = "The exchange rate is: 100 points for $" + rate + " CAD";
+        }
+    }
+</script>

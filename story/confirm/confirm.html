@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Verify a Cleaned Area</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    <h1>Verify a Cleaned Area</h1>
+    <hr>
+    <p>Your location:</p>
+    <img src="map.png" alt="map">
+    <p>This area was recently marked cleaned by another user.</p>
+    <p>Can you please confirm that the area has in fact been cleaned?</p>
+    <button id="yes" onclick="cleaned()">Yes, cleaned</button>
+    <button id="no" onclick="notCleaned()">No, not cleaned</button>
+    <br><br>
+    <hr>
+    <div id="response"></div>
+  </body>
+</html>
+
+<script>
+    var domElement = document.getElementById("response");
+
+    function cleaned() {
+        domElement.textContent = "";
+        var leaveRating = document.createElement("p");
+        leaveRating.textContent = "Please leave a rating below:";
+        domElement.appendChild(leaveRating);
+        var starsElement = document.createElement("div");
+        starsElement.className = "rating";
+        domElement.appendChild(starsElement)
+        for (var i = 5; i > 0; i--) {
+            var star = document.createElement("span");
+            star.textContent = "☆";
+            star.id = i;
+            star.onclick = function() {
+                var removeFeedback = document.getElementById("scoreFeedback");
+                if (removeFeedback) {
+                    removeFeedback.remove();
+                    document.getElementById("break").remove();
+                    for (var i = 1; i < 6; i++) {
+                        var currentStar = document.getElementById(i);
+                        currentStar.textContent = "☆";
+                    }
+                }
+                var blankLine = document.createElement("br");
+                blankLine.id = "break";
+                var response = document.createElement("p");
+                response.id = "scoreFeedback";
+                var score = this.id;
+                for (var i = 1; i <= score; i++) {
+                    var currentStar = document.getElementById(i);
+                    currentStar.textContent = "★";
+                }
+                response.textContent = "Thank you for your feedback. Your rating of " + score + " has been stored.";
+                domElement.appendChild(blankLine);
+                domElement.appendChild(response);
+            };
+            starsElement.appendChild(star);
+        }
+    }
+
+    function notCleaned() {
+        domElement.textContent = "";
+        var reported = document.createElement("p");
+        reported.textContent = "Thank you for your feedback. User has been reported.";
+        domElement.appendChild(reported);
+    }
+</script>
+
+<style>
+    .rating {
+        unicode-bidi: bidi-override;
+        direction: rtl;
+        float: left;
+    }
+    .rating > span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+    }
+    .rating > span:hover:before,
+    .rating > span:hover ~ span:before {
+        content: "\2605";
+        position: absolute;
+    }
+</style>

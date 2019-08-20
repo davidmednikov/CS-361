@@ -1,0 +1,20 @@
+<form id="createPost" action="/" method="post">
+	<fieldset>
+		<legend>Create Post</legend>
+		User Name: <input type="text" name="userName" required><br>
+		Date of Entry: <input type="date" name="dateOfEntry" required><br>
+		Text<br><textarea name="comment" style="width:250px;height:150px;" required></textarea><br>
+		Image: <input type="file" name="image" maxlength="50" allow="text/*"><br>
+		Link: <input type="text" name="link"><br>
+		Privacy Setting: <select name="privacy" required>
+				<option disabled selected value>--Select Privacy--</option>
+				<option value="public">Public</option>
+				<option value="private">Private</option>
+				<option value="custom1">Custom Setting 1</option>
+				<option value="custom2">Custome Setting 2</option>
+		      </select><br>
+		<input type="radio" value="notFake" name="isFake" checked>Not Fake 
+		<input type="radio" value="fake" name="isFake">Fake<br>
+		<input type="Submit" value="Submit">
+	</fieldset>
+</form><br>

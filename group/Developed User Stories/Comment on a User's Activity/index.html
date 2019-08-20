@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> <!--  this is the boot strap style sheet, makes our work easier by providing various css components -->
+    <script src="./script.js"></script> <!-- linking javascript file -->
+  </head>
+  <body onload = "loadUsers()"> <!-- All the HTML code visible to us in the browser is between this body tags-->
+      <div class="container"> <!--  An empty div with bootstrap container  -- Container is a basic layout -- More Info here: https://getbootstrap.com/docs/4.1/layout/overview/#containers -->
+          <nav class = "navbar navbar-default"> <!-- this is nav bar componenet provided by bootstrap : https://getbootstrap.com/docs/4.1/components/navbar/ -->
+              <a class="navbar-brand" href="#">Tasks</a> <!-- name we have given in our nav bar -->
+          </nav>
+          <h3>Users</h3>
+          <ul id = "users-list" class = "list-group"></ul> <!--list to add user names -->
+      </div>
+  </body>
+</html>

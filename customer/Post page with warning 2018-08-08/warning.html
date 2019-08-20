@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fake Post!</title>
+<style>
+	p{
+		text-align:center;
+	}
+</style>
+<script>
+var output = "";
+function ReportClick(elm){
+		var out = elm.getAttribute("value");
+		//alert("SendMessage, value:"+ out);
+		if(out == "Post" || out == "Cancel"){
+			output = out;
+		}
+	}
+window.addEventListener("message", function(event) {
+    if (event.data.message === "requestResult") {
+        // ev.source is the opener
+        if(output != ""){
+        	 event.source.postMessage({ message: "deliverResult", result: output}, "*");
+        	}
+    	}   
+	});
+</script>
+</head>
+<body style="background-color:#ffcccc;">
+	<p>The post you're submitting is Fake!</p>
+	<p>
+	Please click Post to confirm post, Cancel to not post it.
+	</p>
+	<div style="margin:auto;width:150px;">
+		<input type="button" onclick="ReportClick(this);" value="Post">
+		<input type="button" onclick="ReportClick(this);" value="Cancel">
+	</div>
+</body>
+
+</html>

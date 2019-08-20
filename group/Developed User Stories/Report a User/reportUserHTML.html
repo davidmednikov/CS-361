@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>User 1's page</title>
+        <style>
+                /*modal functionality adapted from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal */   
+                .modal {
+                    display: none; /* Hidden by default */
+                    position: fixed; /* Stay in place */
+                    z-index: 1; /* Sit on top */
+                    padding-top: 100px; /* Location of the box */
+                    left: 0;
+                    top: 0;
+                    width: 100%; /* Full width */
+                    height: 100%; /* Full height */
+                    overflow: auto; /* Enable scroll if needed */
+                    background-color: rgb(0,0,0); /* Fallback color */
+                    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                }
+                
+                /* Modal Content */
+                .modal-content {
+                    background-color: #fefefe;
+                    margin: auto;
+                    padding: 20px;
+                    border: 1px solid #888;
+                    width: 80%;
+                }
+                
+                /* The Close Button */
+                .close {
+                    color: #aaaaaa;
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+                
+                .close:hover,
+                .close:focus {
+                    color: #000;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+        </style>
+    </head>
+    <body> 
+        <div>User 1 info</div> <!-- all refereced information  will be supplied with handlebars in actual application-->
+            <p>User name is: User 1</p> <!--User 1 == {{user}}-->
+            <p>User 1's level is 47</p> <!-- 47 == {{level}}-->
+            <p>Bio: Blah blah blah</p> <!-- {{bio}}-->
+        <button id="report">Report user</button>
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span id="close" class="close">&times;</span>
+                 <form id ="userInfo" action="http://classes.engr.oregonstate.edu/eecs/winter2015/cs290-400/tools/class-content/form_tests/check_request.php" method="post">
+                    <select name="reason">Report User For:
+                            <option value="Hate">Hate Speech</option>
+                            <option value="Harm">Self Harm</option>
+                            <option value="Spam">Spam</option>
+                    </select><br>
+                    <button onClick="reportUser('{{userID}}')">Submit Report</button>
+                 </form>
+                 
+            </div>
+        </div> 
+    </body>
+    <script>
+        var modal = document.getElementById("modal");
+        var button = document.getElementById("report");
+        var close = document.getElementById("close");
+        button.onclick = function(){
+            modal.style.display ="block";
+        }
+        close.onclick = function(){
+            modal.style.display ="none";
+        }
+        
+        function reportUser(id){
+            var req = new XMLHttpRequest();
+            var payload = {userID:null};
+            payload.userID = id;
+            payload.reason = document.getElementById("reason").value;
+
+            req.open("POST", "http://classes.engr.oregonstate.edu/eecs/winter2015/cs290-400/tools/class-content/form_tests/check_request.php", true);    //address to be replaced with working database
+            req.setRequestHeader("Content-Type", "application/json");
+            req.addEventListener("load", function(){
+                if( req.status >= 200 && req.status < 400){
+                    window.location = "/";
+                }
+            })
+            req.send(JSON.stringify(payload));
+        }
+    </script>
+</html>

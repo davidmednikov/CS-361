@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Medals/Badges</title>
+    </head>
+    <body>
+        <p id="t"> Click the button below to see the badges you've earned so far!</p>
+        <br>
+        <ol id="badges"></ol>
+    <script>
+        //Once the database is implemented this function will request a list of badges
+        //associated with this user from the database. For now the badges are hard coded
+        //to give our customer a general idea of the display.
+        function showBadges(){
+        var badgeCount = 0;
+        document.getElementById("t").innerText = "Here are the badges you've earned so far!";
+        document.getElementById("badges");
+        var node = document.createElement("LI");
+        var textNode = document.createTextNode("Scout Badge (Your very first confirmed clean up!)");
+        node.appendChild(textNode);
+        document.getElementById("badges").appendChild(node);
+    
+        node = document.createElement("LI");
+        textNode = document.createTextNode("Mr. Clean Badge (Three confirmed cleanups in one week!)");
+        node.appendChild(textNode);
+        document.getElementById("badges").appendChild(node);
+    
+        node = document.createElement("LI");
+        textNode = document.createTextNode("So Fresh and So Clean Badge (You're a pillar in the community, you cleaned every street in your neighborehood!)");
+        node.appendChild(textNode);
+        document.getElementById("badges").appendChild(node);
+        document.getElementById("seeEarned").disabled = true;
+        }
+    </script>
+    <button id="seeEarned" type="button" onclick="showBadges()">See my earned badges</button>
+    </body>
+
+</html>

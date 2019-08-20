@@ -1,0 +1,49 @@
+
+<html>
+    <head>
+        <title>Registration</title>
+    </head>
+    <body id="thebody">
+        <h1>Registration</h1>
+        <form id ="registration" onsubmit="return valid()" action="http://classes.engr.oregonstate.edu/eecs/winter2015/cs290-400/tools/class-content/form_tests/check_request.php" method="post">
+            First name:<br>
+            <input id=fName type ="test" name="firstname"><br>
+            Last name:<br>
+            <input id=lName type ="test" name="lastname"><br>
+            Date of Birth:<br>
+            <input id=dob type ="date" name="dob" required><br>
+            Username:<br>
+            <input id=uName type ="test" name="username"><br>
+            Password:<br>
+            <input id=pass type ="password" name="pass"><br>
+            <input type="submit" value="Register">
+        </form>
+        
+        <script>
+            function submitForm(){
+                //Some validation on user entered values
+                var fName = document.getElementById("fName").value;
+                var lName = document.getElementById("lName").value;
+                var user = document.getElementById("uName").value;
+                var pass = document.getElementById("pass").value;
+                if (fName.length < 1)
+                    alert("Error, the first name field cannot be left blank.");
+                    return false;
+                else if (lName.value.length < 1)
+                    alert("Error, the last name field cannot be left blank.");
+                    return false;
+                else if (uName.value.length < 1)
+                    alert("Error, the username field cannot be left blank");
+                    return false;
+                else if (pass.value.length < 8)
+                    alert("Error, password must be at least 8 characters long");
+                    return false;
+                else{
+                    alert("Registration was successful");
+                    return true;
+                    
+                }
+            }
+        </script>
+    </body>
+</html>
